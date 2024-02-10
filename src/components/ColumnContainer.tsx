@@ -2,15 +2,17 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities"
 import TrashIcon from "../icons/TrashIcon";
 import { Column, Id } from "../types";
+import { useState } from "react";
 
 interface Props {
-    column: Column;
-    deleteColumn: (id: Id) => void;
+  column: Column;
+  deleteColumn: (id: Id) => void;
 }
 
 function ColumnContainer(props: Props) {
-    const { column, deleteColumn } = props
-    const { setNodeRef, attributes, listeners, transform, transition, isDragging } = 
+  const { column, deleteColumn } = props
+  const [editMode, setEditMode] = useState(false);
+  const { setNodeRef, attributes, listeners, transform, transition, isDragging } =
     useSortable({
       id: column.id,
       data: {
@@ -18,16 +20,16 @@ function ColumnContainer(props: Props) {
         column
       }
     });
-    const style = {
-      transition,
-      transform: CSS.Transform.toString(transform)
-    };
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform)
+  };
 
-    if (isDragging) {
-      return (<div 
-        ref={setNodeRef}
-        style={style}
-        className="
+  if (isDragging) {
+    return (<div
+      ref={setNodeRef}
+      style={style}
+      className="
         bg-columnBackgroundColour
         text-white
         opacity-40
@@ -40,14 +42,14 @@ function ColumnContainer(props: Props) {
         flex
         flex-col
         ">
-        </div>)
-    }
+    </div>)
+  }
 
   return (
-    <div 
-    ref={setNodeRef}
-    style={style}
-    className="
+    <div
+      ref={setNodeRef}
+      style={style}
+      className="
     bg-columnBackgroundColour
     text-white
     w-[350px]
@@ -60,9 +62,10 @@ function ColumnContainer(props: Props) {
     >
       {/* Task title */}
       <div
-      {...attributes}
-      {...listeners} 
-      className="
+        {...attributes}
+        {...listeners}
+        onClick={() => { setEditMode(true); }}
+        className="
       bg-mainBackgroundColour
       text-md
       h-[60px]
@@ -93,11 +96,12 @@ function ColumnContainer(props: Props) {
           ">
             0
           </div>
-          {column.title}
+          {!editMode && column.title}
+          {editMode && <input autoFocus onBlur={() => { setEditMode(false); }} />}
         </div>
-        <button 
-        onClick={() => {deleteColumn(column.id)}}
-        className="
+        <button
+          onClick={() => { deleteColumn(column.id) }}
+          className="
         stroke-gray-500
         hover:stroke-white
         hover:bg-columnBackgroundColour
