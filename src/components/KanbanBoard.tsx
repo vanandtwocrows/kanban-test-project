@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Column } from "../types"
+import PlusIcon from "../icons/PlusIcon";
 
 function KanbanBoard() {
     const [columns, setColumns] = useState<Column[]>([])
@@ -40,6 +41,7 @@ function KanbanBoard() {
                 gap-2
                 '
                 >
+                    <PlusIcon />
                     Add column
                 </button>
             </div>
