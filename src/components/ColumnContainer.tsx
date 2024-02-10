@@ -7,10 +7,11 @@ import { useState } from "react";
 interface Props {
   column: Column;
   deleteColumn: (id: Id) => void;
+  updateColumn: (id: Id, title: string) => void;
 }
 
 function ColumnContainer(props: Props) {
-  const { column, deleteColumn } = props
+  const { column, deleteColumn, updateColumn } = props
   const [editMode, setEditMode] = useState(false);
   const { setNodeRef, attributes, listeners, transform, transition, isDragging } =
     useSortable({
@@ -97,7 +98,25 @@ function ColumnContainer(props: Props) {
             0
           </div>
           {!editMode && column.title}
-          {editMode && <input autoFocus onBlur={() => { setEditMode(false); }} />}
+          {editMode
+            && <input
+              value={column.title}
+              onChange={(e) => { updateColumn(column.id, e.target.value) }}
+              autoFocus
+              onBlur={() => { setEditMode(false); }}
+              onKeyDown={(e) => {
+                if (e.key != "Enter") return;
+                setEditMode(false);
+              }}
+              className="
+              bg-black
+              focus:border-rose-500
+              border
+              rounded
+              outline-none
+              px-2
+              "
+            />}
         </div>
         <button
           onClick={() => { deleteColumn(column.id) }}
@@ -120,7 +139,7 @@ function ColumnContainer(props: Props) {
         footer
       </div>
     </div>
-  )
+  );
 }
 
 export default ColumnContainer
