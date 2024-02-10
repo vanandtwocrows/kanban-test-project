@@ -21,7 +21,7 @@ function KanbanBoard() {
             <div className="m-auto flex gap-4">
                 <div className="flex gap-4">
                     {columns.map((col) => (
-                        <ColumnContainer column={col} />
+                        <ColumnContainer column={col} key={col.id}/>
                     ))}
                 </div>
                 <button
