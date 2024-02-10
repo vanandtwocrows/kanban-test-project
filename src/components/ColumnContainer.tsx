@@ -7,7 +7,11 @@ interface Props {
 function ColumnContainer(props: Props) {
     const { column } = props
   return (
-    <div>{column.title}</div>
+    <div className="
+    bg-columnBackgroundColour
+    text-white
+    "
+    >{column.title}</div>
   )
 }
 
