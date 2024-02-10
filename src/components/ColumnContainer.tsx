@@ -1,3 +1,4 @@
+import TrashIcon from "../icons/TrashIcon";
 import { Column } from "../types";
 
 interface Props {
@@ -30,8 +31,29 @@ function ColumnContainer(props: Props) {
       font-bold
       border-columnBackgroundColour
       border-4
+      flex
+      items-center
+      justify-between
       ">
-        {column.title}
+        <div className="
+        flex
+        gap-2
+        ">
+          <div className="
+          flex
+          justify-center
+          items-center
+          bg-columnBackgroundColour
+          px-2
+          py-1
+          text-sm
+          rounded-full
+          ">
+            0
+          </div>
+          {column.title}
+        </div>
+        <button><TrashIcon /></button>
       </div>
       {/* Task body */}
       <div className="flex flex-grow">
