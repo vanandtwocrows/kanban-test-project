@@ -21,12 +21,12 @@ function KanbanBoard() {
             <div className="m-auto flex gap-4">
                 <div className="flex gap-4">
                     {columns.map((col) => (
-                        <ColumnContainer column={col} deleteColumn={deleteColumn} key={col.id}/>
+                        <ColumnContainer column={col} deleteColumn={deleteColumn} key={col.id} />
                     ))}
                 </div>
                 <button
-                onClick={createNewColumn} 
-                className='
+                    onClick={createNewColumn}
+                    className='
                 h-[60px]
                 w-[350px]
                 min-w-[450px]
@@ -50,9 +50,16 @@ function KanbanBoard() {
     );
 
     function createNewColumn() {
+        const nextColNum = columns.reduce((max, col) => {
+            const numMatch = col.title.match(/\d+/);
+            const num = numMatch ? parseInt(numMatch[0]) : 0; // Extract number from title if it exists
+            return num > max ? num : max; // Compare and return the maximum
+        }, 0) + 1;
+        
+        // console.log("Max col num?: ", nextColNum);
         const columnToAdd: Column = {
             id: generateId(),
-            title: `Column ${columns.length + 1}`,
+            title: `Column ${nextColNum}`,
         }
         setColumns([...columns, columnToAdd]);
     }
