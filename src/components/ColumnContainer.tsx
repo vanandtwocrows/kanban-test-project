@@ -53,7 +53,9 @@ function ColumnContainer(props: Props) {
           </div>
           {column.title}
         </div>
-        <button><TrashIcon /></button>
+        <button className="stroke-gray-500">
+          <TrashIcon />
+        </button>
       </div>
       {/* Task body */}
       <div className="flex flex-grow">
