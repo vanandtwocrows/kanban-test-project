@@ -19,7 +19,8 @@ function ColumnContainer(props: Props) {
       data: {
         type: 'Column',
         column
-      }
+      },
+      disabled: editMode
     });
   const style = {
     transition,
