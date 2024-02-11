@@ -12,10 +12,11 @@ interface Props {
   updateColumn: (id: Id, title: string) => void;
   createTask: (id: Id) => void;
   tasks: Task[];
+  deleteTask: (taskId: Id) => void;
 }
 
 function ColumnContainer(props: Props) {
-  const { column, deleteColumn, updateColumn, createTask, tasks } = props
+  const { column, deleteColumn, updateColumn, createTask, tasks, deleteTask } = props
   const [editMode, setEditMode] = useState(false);
   const { setNodeRef, attributes, listeners, transform, transition, isDragging } =
     useSortable({
@@ -66,7 +67,7 @@ function ColumnContainer(props: Props) {
     flex-col
     "
     >
-      {/* Task title */}
+      {/* Column title */}
       <div
         {...attributes}
         {...listeners}
@@ -135,15 +136,19 @@ function ColumnContainer(props: Props) {
           <TrashIcon />
         </button>
       </div>
-      {/* Task body */}
+      {/* Column body */}
       <div className="
       flex 
       flex-grow 
       flex-col
+      gap-4
+      p-2
+      overflow-x-hidden
+      overflow-y-auto
       ">
-        {tasks.map(task => (<TaskContainer key={task.id} task={task}></ TaskContainer>))}
+        {tasks.map(task => (<TaskContainer key={task.id} task={task} deleteTask={deleteTask}></ TaskContainer>))}
       </div>
-      {/* Task footer */}
+      {/* Column footer */}
       <button
         onClick={() => {
           createTask(column.id);
