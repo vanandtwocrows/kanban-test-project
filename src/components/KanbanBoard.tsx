@@ -174,6 +174,10 @@ function KanbanBoard() {
 
         if (!over) return;
 
+        const isActiveColumn = active.data.current?.type === "Column";
+
+        if (!isActiveColumn) return;
+
         const activeColumnId = active.id
         const overColumnId = over.id
 
