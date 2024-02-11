@@ -47,7 +47,7 @@ export function TaskContainer(props: Props) {
                 placeholder="Enter some content here ;)"
                 onBlur={toggleEditMode}
                 onKeyDown={(e) => {
-                    if (e.key === "Enter") toggleEditMode();
+                    if (e.key === "Enter" && e.shiftKey) toggleEditMode();
                 }}
                 onChange={e => updateTask(task.id, e.target.value)}
             ></textarea>
@@ -72,7 +72,9 @@ export function TaskContainer(props: Props) {
             onMouseEnter={() => setMouseIsOver(true)}
             onMouseLeave={() => setMouseIsOver(false)}
         >
-            {task.content}
+            <p
+                className="my-auto h-[90%] w-full overflow-y-auto overflow-x-auto whitespace-pre-wrap"
+            >{task.content}</p>
             {mouseIsOver
                 && (<button
                     className="stroke-white bg-columnBackgroundColour absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded opacity-60 hover:opacity-100"
