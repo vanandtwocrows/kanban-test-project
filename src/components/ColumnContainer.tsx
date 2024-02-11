@@ -13,10 +13,11 @@ interface Props {
   createTask: (id: Id) => void;
   tasks: Task[];
   deleteTask: (taskId: Id) => void;
+  updateTask: (taskId: Id, value: string) => void;
 }
 
 function ColumnContainer(props: Props) {
-  const { column, deleteColumn, updateColumn, createTask, tasks, deleteTask } = props
+  const { column, deleteColumn, updateColumn, createTask, tasks, deleteTask, updateTask } = props
   const [editMode, setEditMode] = useState(false);
   const { setNodeRef, attributes, listeners, transform, transition, isDragging } =
     useSortable({
@@ -146,7 +147,7 @@ function ColumnContainer(props: Props) {
       overflow-x-hidden
       overflow-y-auto
       ">
-        {tasks.map(task => (<TaskContainer key={task.id} task={task} deleteTask={deleteTask}></ TaskContainer>))}
+        {tasks.map(task => (<TaskContainer key={task.id} task={task} deleteTask={deleteTask} updateTask={updateTask}></ TaskContainer>))}
       </div>
       {/* Column footer */}
       <button
