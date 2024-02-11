@@ -1,18 +1,30 @@
-import { useSortable } from "@dnd-kit/sortable";
+import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities"
 import TrashIcon from "../icons/TrashIcon";
-import { Column, Id } from "../types";
-import { useState } from "react";
+import { Column, Id, Task } from "../types";
+import { useMemo, useState } from "react";
+import PlusIcon from "../icons/PlusIcon";
+import { TaskContainer } from "./TaskContainer";
 
 interface Props {
   column: Column;
   deleteColumn: (id: Id) => void;
   updateColumn: (id: Id, title: string) => void;
+  createTask: (id: Id) => void;
+  tasks: Task[];
+  deleteTask: (taskId: Id) => void;
+  updateTask: (taskId: Id, value: string) => void;
 }
 
 function ColumnContainer(props: Props) {
-  const { column, deleteColumn, updateColumn } = props
+  const { column, deleteColumn, updateColumn, createTask, tasks, deleteTask, updateTask } = props
+  
   const [editMode, setEditMode] = useState(false);
+  
+  const tasksIds = useMemo(() => {
+    return tasks.map(task => task.id);
+  }, [tasks]);
+
   const { setNodeRef, attributes, listeners, transform, transition, isDragging } =
     useSortable({
       id: column.id,
@@ -62,7 +74,7 @@ function ColumnContainer(props: Props) {
     flex-col
     "
     >
-      {/* Task title */}
+      {/* Column title */}
       <div
         {...attributes}
         {...listeners}
@@ -131,14 +143,42 @@ function ColumnContainer(props: Props) {
           <TrashIcon />
         </button>
       </div>
-      {/* Task body */}
-      <div className="flex flex-grow">
-        Content
+      {/* Column body */}
+      <div className="
+      flex 
+      flex-grow 
+      flex-col
+      gap-4
+      p-2
+      overflow-x-hidden
+      overflow-y-auto
+      ">
+        <SortableContext items={tasksIds}>
+          {tasks.map(task => (
+          <TaskContainer 
+            key={task.id} 
+            task={task} 
+            deleteTask={deleteTask} 
+            updateTask={updateTask}
+          />))}
+        </SortableContext>
       </div>
-      {/* Task footer */}
-      <div>
-        footer
-      </div>
+      {/* Column footer */}
+      <button
+        onClick={() => {
+          createTask(column.id);
+        }}
+        className="flex gap-2 items-center
+      border-columnBackgroundColour 
+      border-2 rounded-md 
+      p-4 
+      border-x-columnBackgroundColour 
+      hover:bg-mainBackgroundColour 
+      hover:text-rose-500 
+      active:bg-black
+      ">
+        <PlusIcon />Add task
+      </button>
     </div>
   );
 }
