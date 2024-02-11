@@ -49,7 +49,8 @@ export function TaskContainer(props: Props) {
                 rounded-xl
                 border-2 border-rose-500 cursor-grab
                 relative
-                opacity-30"
+                opacity-30
+                task"
             />
         )
     }
@@ -69,7 +70,8 @@ export function TaskContainer(props: Props) {
             text-left 
             rounded-xl
             hover:ring-2 hover:ring-inset hover:ring-rose-500 cursor-grab
-            relative"
+            relative
+            task"
         >
             <textarea
                 className="
@@ -111,7 +113,8 @@ export function TaskContainer(props: Props) {
             text-left 
             rounded-xl
             hover:ring-2 hover:ring-inset hover:ring-rose-500 cursor-grab
-            relative"
+            relative
+            task"
             onMouseEnter={() => setMouseIsOver(true)}
             onMouseLeave={() => setMouseIsOver(false)}
         >
