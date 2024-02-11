@@ -10,12 +10,13 @@ body,
 
 ::-webkit-scrollbar {
     width: 4px;
+    /* background: transparent; */
 }
 
 ::-webkit-scrollbar:horizontal {
     height: 8px;
 }
 
-::-webkit-scrollbar:thumb {
+::-webkit-scrollbar-thumb {
     @apply bg-rose-900 rounded-xl;
 }
