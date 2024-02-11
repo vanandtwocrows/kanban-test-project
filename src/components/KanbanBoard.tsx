@@ -129,7 +129,12 @@ function KanbanBoard() {
     }
 
     function createTask(columnId: Id) {
-        const newTask = { id: generateId(), columnId, title: "New task", content: "Enter content here" }
+        const nextTaskNum = tasks.reduce((max, task) => {
+            const numMatch = task.content.match(/\d+/);
+            const num = numMatch ? parseInt(numMatch[0]) : 0; // Extract number from title if it exists
+            return num > max ? num : max; // Compare and return the maximum
+        }, 0) + 1;
+        const newTask = { id: generateId(), columnId, content: `Task ${nextTaskNum}`}
         setTasks([...tasks, newTask])
     }
 
